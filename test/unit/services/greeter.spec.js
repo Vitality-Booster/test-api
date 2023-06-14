@@ -46,6 +46,13 @@ describe("Test 'greeter' service", () => {
 			expect(res.name).toEqual(record.name);
 			await service.adapter.clear();
 		});
+		it("should delete an existing record in the database", async () => {
+			const res = await broker.call("greeter.create", {name: "Vitali", purpose: "test"});
+			await broker.call("greeter.remove", {id: res._id.toString()});
+			await expect(broker.call("greeter.get", {id: res._id.toString()})).rejects
+				.toThrow();
+			await service.adapter.clear();
+		});
 	});
 
 });
