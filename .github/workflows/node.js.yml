@@ -32,7 +32,8 @@ jobs:
           
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - name: Run all tests
+      run: npm test
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
